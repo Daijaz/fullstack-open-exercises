@@ -1,4 +1,3 @@
-```markdown
 # Ejercicio 0.6: Nueva nota en diagrama de aplicación de una sola página
 
 ## Descripción
