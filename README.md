@@ -1,4 +1,4 @@
-```markdown
+
 # 📚 Full Stack Open - Ejercicios
 
 Bienvenido/a a mi repositorio de ejercicios del curso **Full Stack Open**! 🚀
@@ -21,10 +21,11 @@ El curso **Full Stack Open** es una de las mejores maneras de aprender desarroll
 1. Clona el repositorio:
    ```bash
    git clone https://github.com/tu-usuario/fullstack-open-exercises.git
-   
+   ```
 2. Accede a la carpeta del ejercicio correspondiente:   
    ```bash
    cd part0
+   ```
 
 3. Sigue las instrucciones o descripciones específicas de cada ejercicio en su respectiva carpeta.
 
@@ -34,4 +35,4 @@ Si encuentras un error o tienes sugerencias, siéntete libre de abrir un issue o
 # 📩 Contacto
 Si tienes alguna pregunta o quieres discutir algún ejercicio, puedes encontrarme en GitHub o enviarme un mensaje. ¡Estoy abierto a colaboraciones! 🚀
 
-```
+
