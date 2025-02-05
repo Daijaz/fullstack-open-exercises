@@ -1,3 +1,11 @@
+```markdown
+# Ejercicio 0.4: Nuevo diagrama de nota
+
+## Descripción
+Este diagrama representa la secuencia de eventos que ocurren cuando un usuario crea una nueva nota en la aplicación. El usuario escribe una nota en el campo de texto y hace clic en "Save". El diagrama muestra la interacción entre el navegador y el servidor.
+
+## Diagrama de secuencia
+```mermaid
 sequenceDiagram
     participant browser
     participant server
