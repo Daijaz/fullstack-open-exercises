@@ -5,9 +5,15 @@ import Footer from "./Footer";
 const Course = ({course}) => {
     return (
         <>
-            <Header course={course}r></Header>
-            <Content course={course}></Content>
-            <Footer course={course}></Footer> 
+            {
+                course.map(course => 
+                    <div key={course.id}>
+                        <Header course={course}></Header>
+                        <Content course={course}></Content>
+                        <Footer course={course}></Footer>
+                    </div>
+                )
+            }
         </>
     )
 } 
