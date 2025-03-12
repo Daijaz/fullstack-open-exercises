@@ -1,4 +1,8 @@
 import { useState } from 'react'
+import  Filter  from './components/Filter'
+import  PersonForm  from './components/PersonForm'
+import  Persons  from './components/Persons'
+
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -8,25 +12,8 @@ const App = () => {
     { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
   ]) 
   const [newName, setNewName] = useState('')
-  const [newNumber, setNewNumber] = useState('')
+  const [newNumber, setNewNumber] = useState('') 
   const [newFilter, setNewFilter] = useState('')
-
-  const addPerson = (event) => {
-    event.preventDefault()
-    const personObject = {
-      name: newName,
-      number: newNumber
-    }
-    const alreadyUsed = persons.every(person => person.name !== newName)
-    
-    if (alreadyUsed) {
-      setPersons(persons.concat(personObject))
-      setNewName('')
-      setNewNumber('') 
-    } else {
-      alert(`${newName} is already added to phonebook`)
-    }
-  }
           
   const handleNameChange = (event) => {
     console.log(event.target.value)
@@ -43,38 +30,14 @@ const App = () => {
     setNewFilter(event.target.value)
   }
 
-  const filtered = persons.filter((person) =>
-    person.name.toLocaleLowerCase().includes(newFilter))
-
-  console.log(filtered)
-
   return (
     <div>
       <h2>Phonebook</h2>
-      filter shown with: <input onChange={handleFilterChange} />
-      <form onSubmit={addPerson}>
-        <h2>add a new</h2> 
-        <div>
-          name: <input onChange={handleNameChange}/>
-        </div>
-        <div>
-          phone: <input onChange={handleNumberChange}/>
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
-      <h2>Numbers</h2>
-      <ul>
-        {
-          filtered.map(person => 
-            <li key={person.name}>{person.name} {person.number}</li>
-          )
-        }    
-      </ul>
-
- 
-      
+      <Filter handleFilterChange={handleFilterChange}/>
+      <h3>add a new</h3>
+      <PersonForm newName={newName} newNumber={newNumber} persons={persons} setPersons={setPersons} setNewName={setNewName} setNewNumber={setNewNumber} handleNameChange={handleNameChange} handleNumberChange={handleNumberChange}/>
+      <h3>Numbers</h3>
+      <Persons persons={persons} newFilter={newFilter} handleFilterChange={handleFilterChange}/>
     </div>
   )
 }
