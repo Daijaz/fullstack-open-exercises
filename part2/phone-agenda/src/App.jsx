@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-<<<<<<< HEAD
 import personService from './services/persons'
 import Person from './components/Person'
  
@@ -46,30 +45,6 @@ const App = () => {
     }
   }
           
-=======
-import axios from 'axios'
-import  Filter  from './components/Filter'
-import  PersonForm  from './components/PersonForm'
-import  Persons  from './components/Persons'
-import './assets/styles/App.css'
-
-
-const App = () => {
-  const [persons, setPersons] = useState([]) 
-  const [newName, setNewName] = useState('')
-  const [newNumber, setNewNumber] = useState('') 
-  const [newFilter, setNewFilter] = useState('')
-
-  useEffect(() => {
-    axios
-    .get('http://localhost:3001/persons')
-    .then((response) => {
-      setPersons(response.data)
-    })
-  }, [])
-  
-
->>>>>>> a7679ec47c46fa4d8a125116b43447ac79fb49bf
   const handleNameChange = (event) => {
     console.log(event.target.value)
     setNewName(event.target.value)
@@ -79,14 +54,6 @@ const App = () => {
     console.log(event.target.value)
     setNewNumber(event.target.value)
   }
-<<<<<<< HEAD
-=======
-
-  const handleFilterChange = (event) => {
-    console.log(event.target.value)
-    setNewFilter(event.target.value)
-  }
->>>>>>> a7679ec47c46fa4d8a125116b43447ac79fb49bf
 
   const handleFilterChange = (event) => {
     console.log(event.target.value)
@@ -107,9 +74,8 @@ const App = () => {
   const filtered = persons.filter(person => person.name.toLowerCase().includes(newFilter.toLowerCase()) ? person.name : '')
  
   return (
-    <div className='main-container'>
+    <div>
       <h2>Phonebook</h2>
-<<<<<<< HEAD
       <div>
         filter shown with: <input value={newFilter} onChange={handleFilterChange}/>
       </div>
@@ -135,13 +101,6 @@ const App = () => {
           />
         )}
       </ul>
-=======
-      <Filter handleFilterChange={handleFilterChange}/>
-      <h3>add a new</h3>
-      <PersonForm newName={newName} newNumber={newNumber} persons={persons} setPersons={setPersons} setNewName={setNewName} setNewNumber={setNewNumber} handleNameChange={handleNameChange} handleNumberChange={handleNumberChange}/>
-      <h3>Numbers</h3>
-      <Persons persons={persons} newFilter={newFilter} handleFilterChange={handleFilterChange}/>
->>>>>>> a7679ec47c46fa4d8a125116b43447ac79fb49bf
     </div>
   )
 }
