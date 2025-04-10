@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react'
 import personService from './services/persons'
 import Person from './components/Person'
+import Notification from './components/Notification'
  
 const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [newFilter, setNewFilter] = useState('')
+  const [message, setMessage] = useState(null)
+  const [messageType, setMessageType] = useState(null)
 
   useEffect(() => {
     personService
@@ -31,7 +34,14 @@ const App = () => {
         .create(personObject)
         .then((personCreated) => setPersons(persons.concat(personCreated)))
         setNewName('')
-        setNewNumber('')         
+        setNewNumber('')    
+        setMessage(`Added ${personObject.name}`)
+        setMessageType('success')
+        setTimeout(() => {
+          setMessage(null)
+          setMessageType(null)
+        }, 5000)
+  
       } else {
         if(window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)){
           const personToChange = persons.find((person) => person.name === newName)
@@ -40,6 +50,27 @@ const App = () => {
           personService
           .update(personCopy.id, personCopy)
           .then((response) => setPersons(persons.map(person => person.name !== response.name ? person : personCopy)))
+          .catch(error => {
+            setMessage(`There is an error updating ${personCopy.name} It was deleted before`)
+            setMessageType('error')
+    
+            setTimeout(() => {
+              setMessage(null)
+              setMessageType(null)
+            },5000)
+
+            setPersons(persons.map(person => person.name !== response.name ? person : personCopy))
+          }) 
+
+          setNewName('')
+          setNewNumber('') 
+          setMessage(`Updated ${personCopy.name}`)
+          setMessageType('success')
+          setTimeout(() => {
+            setMessage(null)
+            setMessageType(null)
+          }, 5000)
+          setPersons(persons.map(person => person.name !== response.name ? person : personCopy))
         }
       }
     }
@@ -68,14 +99,25 @@ const App = () => {
       .deletePerson(id)
       .then(response => response.data.id)
       .then(response => setPersons(persons.filter(person => person.id !== response )))
+      .catch(error => {
+        setMessage(`There is an error deleting ${personSelected.name}. It was deleted before`)
+        setMessageType('error')
+
+        setTimeout(() => {
+          setMessage(null)
+          setMessageType(null)
+        },5000)
+      })
     }
   }
+
 
   const filtered = persons.filter(person => person.name.toLowerCase().includes(newFilter.toLowerCase()) ? person.name : '')
  
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={message} type={messageType} />
       <div>
         filter shown with: <input value={newFilter} onChange={handleFilterChange}/>
       </div>
@@ -104,5 +146,4 @@ const App = () => {
     </div>
   )
 }
-
 export default App

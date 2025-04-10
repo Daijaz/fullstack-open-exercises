@@ -3,7 +3,7 @@
     {
       "id": "2",
       "name": "María García",
-      "number": "123-345-123"
+      "number": "23-344-222"
     },
     {
       "id": "4",
@@ -19,16 +19,6 @@
       "id": "6",
       "name": "Laura Martínez",
       "number": "699-888-2345"
-    },
-    {
-      "id": "7",
-      "name": "David Sánchez",
-      "number": "633-111-6789"
-    },
-    {
-      "id": "f77e",
-      "name": "Camilo Rodriguez",
-      "number": "123-123-1234"
     }
   ]
 }
