@@ -49,28 +49,26 @@ const App = () => {
 
           personService
           .update(personCopy.id, personCopy)
-          .then((response) => setPersons(persons.map(person => person.name !== response.name ? person : personCopy)))
-          .catch(error => {
-            setMessage(`There is an error updating ${personCopy.name} It was deleted before`)
-            setMessageType('error')
-    
+          .then((response) =>{
+            setPersons(persons.map(person => person.name !== response.name ? person : personCopy))
+            setMessage(`${response.name}, updated correctly`)
+            setMessageType('success')
             setTimeout(() => {
               setMessage(null)
               setMessageType(null)
+            }, 5000)          
+          })
+          .catch(error => {
+            setMessage(`There is an error updating ${personCopy.name}. It was deleted before`)
+            setMessageType('error')
+            setTimeout(() => {
+              setMessage(null)
+              setMessageType(null)
+              setNewName('')
+              setNewNumber('')
+              personService.getAll().then((response) => setPersons(response))
             },5000)
-
-            setPersons(persons.map(person => person.name !== response.name ? person : personCopy))
-          }) 
-
-          setNewName('')
-          setNewNumber('') 
-          setMessage(`Updated ${personCopy.name}`)
-          setMessageType('success')
-          setTimeout(() => {
-            setMessage(null)
-            setMessageType(null)
-          }, 5000)
-          setPersons(persons.map(person => person.name !== response.name ? person : personCopy))
+          })  
         }
       }
     }
@@ -98,19 +96,27 @@ const App = () => {
       personService
       .deletePerson(id)
       .then(response => response.data.id)
-      .then(response => setPersons(persons.filter(person => person.id !== response )))
-      .catch(error => {
-        setMessage(`There is an error deleting ${personSelected.name}. It was deleted before`)
-        setMessageType('error')
-
+      .then(response => {
+        setMessage(`${personSelected.name} was eliminated`)
+        setMessageType('success')
         setTimeout(() => {
           setMessage(null)
           setMessageType(null)
+          setPersons(persons.filter(person => person.id !== response ))
+        },5000)
+        
+      })
+      .catch(error => {
+        setMessage(`There is an error deleting ${personSelected.name}. It was deleted before`)
+        setMessageType('error')
+        setTimeout(() => {
+          setMessage(null)
+          setMessageType(null)
+          personService.getAll().then((response) => setPersons(response))
         },5000)
       })
     }
   }
-
 
   const filtered = persons.filter(person => person.name.toLowerCase().includes(newFilter.toLowerCase()) ? person.name : '')
  
