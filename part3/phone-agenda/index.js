@@ -1,9 +1,17 @@
 const express = require('express');
+const morgan = require('morgan')
 const app = express();
 
 app.use(express.json());
 
-const persons = [
+
+morgan.token('body', (req, res) => {
+  return JSON.stringify(req.body);
+});
+
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'));
+
+let persons = [
     { 
       "id": 1,
       "name": "Arto Hellas", 
@@ -50,8 +58,62 @@ app.get('/api/persons/:id', (req, res) => {
     }
 });
 
+app.delete('/api/persons/:id', (req, res) => {
+    const id = Number(req.params.id);   
+    persons = persons.filter(p => p.id !== id);
+    res.status(204).send('<h1>Person deleted</h1>');
+    console.log(persons);
+});
+
+const generateId = () => {
+    const newId = Math.floor(Math.random() * 10000) + 1;
+    if (newId > persons.length) {
+       return newId
+    }
+
+};
+
+app.post('/api/persons', (req, res) => {
+    const person = req.body;
+
+    const personExist= persons.find(p => p.name === person.name);
+
+
+    if (!person || !person.name || !person.number) {
+        return res.status(400).json({ error: 'Missing information for the POST' });
+    } else if (personExist) {
+        return res.status(400).json({ error: 'Name must be unique' });
+    } else {
+        const newPerson = {
+            id: generateId(),
+            name: person.name,
+            number: person.number
+        }
+        persons.push(newPerson);
+        res.status(201).json(newPerson);
+    }
+
+});
+
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({ error: 'unknown endpoint' })
+}
+
+/*
+const requestLogger = (request, response, next) => {
+  console.log('Method:', request.method)
+  console.log('Path:  ', request.path)
+  console.log('Body:  ', request.body)
+  console.log('---')
+  next()
+}
+  app.use(requestLogger)
+*/
+
+
+app.use(unknownEndpoint)
 
 const port = 3001;
 app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+    console.log(`Server running on http://localhost:${port}/`);
 });

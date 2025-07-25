@@ -1,0 +1,16 @@
+DELETE http://localhost:3001/api/persons/3404
+
+###
+POST http://localhost:3001/api/persons/
+Content-Type: application/json
+
+{
+    "name": "Sofía Omelith",
+    "number": "320-336-2180"
+}
+
+###
+GET http://localhost:3001/api/persons/
+
+###
+HEAD http://localhost:3001/api/persons/
