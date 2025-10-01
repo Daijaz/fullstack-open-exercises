@@ -3,6 +3,7 @@ const morgan = require('morgan')
 const app = express();
 
 app.use(express.json());
+app.use(express.static('dist'))
 
 
 morgan.token('body', (req, res) => {
@@ -75,6 +76,8 @@ const generateId = () => {
 
 app.post('/api/persons', (req, res) => {
     const person = req.body;
+
+    console.log(person);
 
     const personExist= persons.find(p => p.name === person.name);
 
